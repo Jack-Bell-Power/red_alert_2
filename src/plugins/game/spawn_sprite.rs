@@ -46,15 +46,13 @@ pub fn animate_sprite(time: Res<Time>, mut query: Query<(&mut Sprite, &mut Anima
         anim.timer.tick(time.delta());
 
         if anim.timer.just_finished() {
-            // move to the next frame
-            anim.current = (anim.current + 1) % anim.frames.len();
-            sprite.image = anim.frames[anim.current].clone();
+            // only advance if not at the last frame
+            if anim.current < anim.frames.len() - 1 {
+                anim.current += 1;
+                sprite.image = anim.frames[anim.current].clone();
+            }
         }
     }
-}
-
-pub fn setup_camera(mut commands: Commands) {
-    commands.spawn(Camera2d);
 }
 
 pub fn setup(mut commands: Commands, mut images: ResMut<Assets<Image>>) {
@@ -64,5 +62,4 @@ pub fn setup(mut commands: Commands, mut images: ResMut<Assets<Image>>) {
         Path::new("assets/shp/numislmk.shp"),
         Path::new("assets/pal/uniturb.pal"),
     );
-    setup_camera(commands);
 }
