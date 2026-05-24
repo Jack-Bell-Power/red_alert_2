@@ -59,7 +59,7 @@ pub fn setup(mut commands: Commands, mut images: ResMut<Assets<Image>>) {
     spawn_sprite(
         &mut commands,
         &mut images,
-        Path::new("assets/shp/numislmk.shp"),
+        Path::new("assets/shp/nuweapmk.shp"),
         Path::new("assets/pal/uniturb.pal"),
     );
 }

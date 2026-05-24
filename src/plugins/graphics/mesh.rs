@@ -4,7 +4,7 @@ use bevy::{
     prelude::*,
 };
 
-fn create_iso_grid_mesh(size: i16, spacing: f32) -> Mesh {
+fn create_parallelogram_mesh(size: i16, spacing: f32) -> Mesh {
     let mut mesh = Mesh::new(PrimitiveTopology::LineList, RenderAssetUsages::RENDER_WORLD);
 
     let mut positions = Vec::<[f32; 3]>::new();
@@ -50,7 +50,7 @@ pub fn setup(
     mut meshes: ResMut<Assets<Mesh>>,
     mut materials: ResMut<Assets<ColorMaterial>>,
 ) {
-    let mesh = create_iso_grid_mesh(100, 62.0);
+    let mesh = create_parallelogram_mesh(60, 64.0);
 
     commands.spawn((
         Mesh2d(meshes.add(mesh)),
