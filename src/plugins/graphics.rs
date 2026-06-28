@@ -1,7 +1,7 @@
 use bevy::prelude::*;
 
 mod camera2d;
-mod mesh;
+pub mod mesh;
 mod window_setup;
 
 pub struct Graphics;
