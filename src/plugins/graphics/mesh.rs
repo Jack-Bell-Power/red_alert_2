@@ -4,76 +4,76 @@ use bevy::{
     prelude::*,
 };
 
-fn krei_kradan_maŝon(radiuso: i32, kahela_larĝo: f32, kahela_alto: f32) -> Mesh {
-    let mut pozicioj = Vec::<[f32; 3]>::new();
-    let mut indicoj = Vec::<u32>::new();
+fn create_grid_mesh(radius: i32, tile_width: f32, tile_height: f32) -> Mesh {
+    let mut positions = Vec::<[f32; 3]>::new();
+    let mut indices = Vec::<u32>::new();
 
-    let kl = kahela_larĝo * 0.5;
-    let ka = kahela_alto * 0.5;
+    let tw = tile_width * 0.5;
+    let th = tile_height * 0.5;
 
-    let mut indico = 0;
+    let mut index = 0;
 
-    for x in -radiuso..=radiuso {
-        for y in -radiuso..=radiuso {
-            let c = krado_al_mondo(x, y, kahela_larĝo, kahela_alto);
+    for x in -radius..=radius {
+        for y in -radius..=radius {
+            let c = grid_to_world(x, y, tile_width, tile_height);
 
-            let supro: [f32; 3] = [c.x, c.y + ka, 0.0];
-            let dekstre = [c.x + kl, c.y, 0.0];
-            let malsupro = [c.x, c.y - ka, 0.0];
-            let maldekstre = [c.x - kl, c.y, 0.0];
+            let top: [f32; 3] = [c.x, c.y + th, 0.0];
+            let right = [c.x + tw, c.y, 0.0];
+            let bottom = [c.x, c.y - th, 0.0];
+            let left = [c.x - tw, c.y, 0.0];
 
-            pozicioj.push(supro);
-            pozicioj.push(dekstre);
-            pozicioj.push(malsupro);
-            pozicioj.push(maldekstre);
+            positions.push(top);
+            positions.push(right);
+            positions.push(bottom);
+            positions.push(left);
 
-            indicoj.extend_from_slice(&[
-                indico,
-                indico + 1,
-                indico + 1,
-                indico + 2,
-                indico + 2,
-                indico + 3,
-                indico + 3,
-                indico,
+            indices.extend_from_slice(&[
+                index,
+                index + 1,
+                index + 1,
+                index + 2,
+                index + 2,
+                index + 3,
+                index + 3,
+                index,
             ]);
 
-            indico += 4;
+            index += 4;
         }
     }
 
-    let mut maŝo = Mesh::new(
+    let mut mesh = Mesh::new(
         PrimitiveTopology::LineList,
         RenderAssetUsages::default(),
     );
 
-    maŝo.insert_attribute(Mesh::ATTRIBUTE_POSITION, pozicioj);
-    maŝo.insert_indices(Indices::U32(indicoj));
+    mesh.insert_attribute(Mesh::ATTRIBUTE_POSITION, positions);
+    mesh.insert_indices(Indices::U32(indices));
 
-    maŝo
+    mesh
 }
 
 pub fn setup(
-    mut komandoj: Commands,
-    mut maŝoj: ResMut<Assets<Mesh>>,
-    mut materialoj: ResMut<Assets<ColorMaterial>>,
+    mut commands: Commands,
+    mut meshes: ResMut<Assets<Mesh>>,
+    mut materials: ResMut<Assets<ColorMaterial>>,
 ) {
-    let maŝo = krei_kradan_maŝon(60, 64.0, 32.0);
+    let mesh = create_grid_mesh(60, 64.0, 32.0);
 
-    komandoj.spawn((
-        Mesh2d(maŝoj.add(maŝo)),
-        MeshMaterial2d(materialoj.add(ColorMaterial::from(Color::srgb(0.3, 0.3, 0.3)))),
+    commands.spawn((
+        Mesh2d(meshes.add(mesh)),
+        MeshMaterial2d(materials.add(ColorMaterial::from(Color::srgb(0.3, 0.3, 0.3)))),
     ));
 }
 
-pub fn krado_al_mondo(i: i32, j: i32, tile_w: f32, tile_h: f32) -> Vec2 {
+pub fn grid_to_world(i: i32, j: i32, tile_w: f32, tile_h: f32) -> Vec2 {
     Vec2::new(
         (i - j) as f32 * (tile_w * 0.5),
         (i + j) as f32 * (tile_h * 0.5),
     )
 }
 
-pub fn mondo_al_krado(world: Vec2, tile_w: f32, tile_h: f32) -> IVec2 {
+pub fn world_to_grid(world: Vec2, tile_w: f32, tile_h: f32) -> IVec2 {
     let i = ((world.x / (tile_w * 0.5) + world.y / (tile_h * 0.5)) * 0.5).round() as i32;
     let j = ((world.y / (tile_h * 0.5) - world.x / (tile_w * 0.5)) * 0.5).round() as i32;
     IVec2::new(i, j)
