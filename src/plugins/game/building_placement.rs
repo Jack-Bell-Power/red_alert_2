@@ -39,7 +39,6 @@ pub fn update_preview_placement_system(
     windows: Query<&Window>,
     camera_query: Query<(&Camera, &GlobalTransform)>,
     mut preview_query: Query<&mut Transform, With<PreviewPlacement>>,
-    placement: Res<Placement>,
 ) {
     let Ok(window) = windows.single() else {
         return;
@@ -61,18 +60,9 @@ pub fn update_preview_placement_system(
     let tile_width = 64.0;
     let tile_height = 32.0;
 
-    // building size offset
-    let (width, height) = placement.size;
-    let offset_x = (width as f32 - 1.0) * 0.5;
-    let offset_y = (height as f32 - 1.0) * 0.5;
-
     let grid = world_to_grid(world_position, tile_width, tile_height);
-    let aligned = grid_to_world(
-        grid.x + offset_x,
-        grid.y + offset_y,
-        tile_width,
-        tile_height,
-    );
+
+    let aligned = grid_to_world(grid.x, grid.y, tile_width, tile_height);
 
     preview_transform.translation.x = aligned.x;
     preview_transform.translation.y = aligned.y;
@@ -83,19 +73,28 @@ fn create_diamond_mesh(size: (u16, u16)) -> Mesh {
     let tile_width = 64.0;
     let tile_height = 32.0;
 
-    let (w, h) = size;
+    let (width, height) = size;
 
-    let tw = tile_width * w as f32 * 0.5;
-    let th = tile_height * h as f32 * 0.5;
+    let mut positions = Vec::<[f32; 3]>::new();
+    let mut indices = Vec::<u32>::new();
 
-    let positions = vec![
-        [0.0, th, 0.0],  // top
-        [tw, 0.0, 0.0],  // right
-        [0.0, -th, 0.0], // bottom
-        [-tw, 0.0, 0.0], // left
-    ];
+    for y in 0..height {
+        for x in 0..width {
+            let center = grid_to_world(x as f32, y as f32, tile_width, tile_height);
 
-    let indices = vec![0, 1, 2, 0, 2, 3];
+            let start = positions.len() as u32;
+
+            positions.push([center.x, center.y + tile_height * 0.5, 0.0]); // top
+
+            positions.push([center.x + tile_width * 0.5, center.y, 0.0]); // right
+
+            positions.push([center.x, center.y - tile_height * 0.5, 0.0]); // bottom
+
+            positions.push([center.x - tile_width * 0.5, center.y, 0.0]); // left
+
+            indices.extend([start, start + 1, start + 2, start, start + 2, start + 3]);
+        }
+    }
 
     let mut mesh = Mesh::new(
         PrimitiveTopology::TriangleList,
@@ -103,6 +102,7 @@ fn create_diamond_mesh(size: (u16, u16)) -> Mesh {
     );
 
     mesh.insert_attribute(Mesh::ATTRIBUTE_POSITION, positions);
+
     mesh.insert_indices(Indices::U32(indices));
 
     mesh
