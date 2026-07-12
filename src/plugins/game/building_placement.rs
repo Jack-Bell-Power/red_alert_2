@@ -9,6 +9,7 @@ use crate::plugins::graphics::mesh::{grid_to_world, world_to_grid};
 #[derive(Resource, Default)]
 pub struct Placement {
     pub active: bool,
+    pub size: (u16, u16),
 }
 
 #[derive(Component)]
@@ -25,7 +26,7 @@ pub fn placement_system(
         return;
     }
 
-    let diamond = create_diamond_mesh(64.0, 32.0);
+    let diamond = create_diamond_mesh(placement.size);
 
     commands.spawn((
         Mesh2d(meshes.add(diamond)),
@@ -38,6 +39,7 @@ pub fn update_preview_placement_system(
     windows: Query<&Window>,
     camera_query: Query<(&Camera, &GlobalTransform)>,
     mut preview_query: Query<&mut Transform, With<PreviewPlacement>>,
+    placement: Res<Placement>,
 ) {
     let Ok(window) = windows.single() else {
         return;
@@ -59,17 +61,32 @@ pub fn update_preview_placement_system(
     let tile_width = 64.0;
     let tile_height = 32.0;
 
+    // building size offset
+    let (width, height) = placement.size;
+    let offset_x = (width as f32 - 1.0) * 0.5;
+    let offset_y = (height as f32 - 1.0) * 0.5;
+
     let grid = world_to_grid(world_position, tile_width, tile_height);
-    let aligned = grid_to_world(grid.x, grid.y, tile_width, tile_height);
+    let aligned = grid_to_world(
+        grid.x + offset_x,
+        grid.y + offset_y,
+        tile_width,
+        tile_height,
+    );
 
     preview_transform.translation.x = aligned.x;
     preview_transform.translation.y = aligned.y;
     preview_transform.translation.z = 10.0;
 }
 
-fn create_diamond_mesh(tile_width: f32, tile_height: f32) -> Mesh {
-    let tw = tile_width * 0.5;
-    let th = tile_height * 0.5;
+fn create_diamond_mesh(size: (u16, u16)) -> Mesh {
+    let tile_width = 64.0;
+    let tile_height = 32.0;
+
+    let (w, h) = size;
+
+    let tw = tile_width * w as f32 * 0.5;
+    let th = tile_height * h as f32 * 0.5;
 
     let positions = vec![
         [0.0, th, 0.0],  // top

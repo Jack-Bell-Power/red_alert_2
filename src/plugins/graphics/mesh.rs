@@ -15,7 +15,7 @@ fn create_grid_mesh(radius: i32, tile_width: f32, tile_height: f32) -> Mesh {
 
     for x in -radius..=radius {
         for y in -radius..=radius {
-            let c = grid_to_world(x, y, tile_width, tile_height);
+            let c = grid_to_world(x as f32, y as f32, tile_width, tile_height);
 
             let top: [f32; 3] = [c.x, c.y + th, 0.0];
             let right = [c.x + tw, c.y, 0.0];
@@ -66,16 +66,16 @@ pub fn setup(
     ));
 }
 
-pub fn grid_to_world(i: i32, j: i32, tile_w: f32, tile_h: f32) -> Vec2 {
+pub fn grid_to_world(i: f32, j: f32, tile_w: f32, tile_h: f32) -> Vec2 {
     Vec2::new(
-        (i - j) as f32 * (tile_w * 0.5),
-        (i + j) as f32 * (tile_h * 0.5),
+        (i - j) * (tile_w * 0.5),
+        (i + j) * (tile_h * 0.5),
     )
 }
 
-pub fn world_to_grid(world: Vec2, tile_w: f32, tile_h: f32) -> IVec2 {
-    let i = ((world.x / (tile_w * 0.5) + world.y / (tile_h * 0.5)) * 0.5).round() as i32;
-    let j = ((world.y / (tile_h * 0.5) - world.x / (tile_w * 0.5)) * 0.5).round() as i32;
-    IVec2::new(i, j)
+pub fn world_to_grid(world: Vec2, tile_w: f32, tile_h: f32) -> Vec2 {
+    let i = ((world.x / (tile_w * 0.5) + world.y / (tile_h * 0.5)) * 0.5).round();
+    let j = ((world.y / (tile_h * 0.5) - world.x / (tile_w * 0.5)) * 0.5).round();
+    Vec2::new(i, j)
 }
 

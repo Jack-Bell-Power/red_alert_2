@@ -11,8 +11,9 @@ pub fn button_click_system(
     for (interaction, button) in &query {
         if *interaction == Interaction::Pressed {
             match button {
-                SidebarBuildButton::Gwepicon => {
+                SidebarBuildButton::Gwepicon { width, height } => {
                     placement.active = true;
+                    placement.size = (width.clone(), height.clone());
                 }
             }
         }
