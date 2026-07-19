@@ -29,7 +29,7 @@ pub fn spawn_side2(sidebar: &mut ChildSpawnerCommands, images: &mut Assets<Image
                         .spawn((
                             Button,
                             SidebarBuildButton::Gwepicon {
-                                width: 5,
+                                width: 3,
                                 height: 5,
                             },
                             Node {
