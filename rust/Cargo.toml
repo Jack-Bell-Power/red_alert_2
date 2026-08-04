@@ -1,0 +1,11 @@
+[package]
+name = "red_alert_rust"
+version = "0.1.0"
+edition = "2024"
+
+[lib]
+# Compile this crate to a dynamic C library.
+crate-type = ["cdylib"]
+
+[dependencies]
+godot = "0.5.4"
