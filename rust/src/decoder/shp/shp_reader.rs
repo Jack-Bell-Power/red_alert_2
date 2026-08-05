@@ -5,7 +5,7 @@ use std::{
 };
 
 use byteorder::{LittleEndian, ReadBytesExt};
-use godot::classes::{Image, class_macros::private::virtuals::Xrvrs::Gd};
+use godot::classes::{Image, ImageTexture, class_macros::private::virtuals::Xrvrs::Gd};
 
 use crate::{decoder::pal::palette::Palette, errors::Ra2Error};
 
@@ -58,7 +58,7 @@ pub fn decode_shp_to_image(
     shp_path: &Path,
     pal_path: &Path,
     is_half: bool,
-) -> Result<Vec<Gd<Image>>, Ra2Error> {
+) -> Result<Vec<Gd<ImageTexture>>, Ra2Error> {
     let palette = Palette::load(pal_path)?;
 
     let mut handles = Vec::new();

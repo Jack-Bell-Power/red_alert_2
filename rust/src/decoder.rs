@@ -1,2 +1,2 @@
 mod pal;
-mod shp;
+pub mod shp;

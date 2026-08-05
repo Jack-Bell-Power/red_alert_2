@@ -2,7 +2,7 @@ use std::io::{Read, Seek, SeekFrom};
 
 use byteorder::{LittleEndian, ReadBytesExt};
 use godot::classes::{
-    Image,
+    Image, ImageTexture,
     class_macros::private::virtuals::{Xrvrs::Gd, ZipReader::PackedByteArray},
     image::Format,
 };
@@ -77,7 +77,7 @@ impl ShpFrame {
         palette: &Palette,
         width: u32,
         depth: u32,
-    ) -> Result<Gd<Image>, Ra2Error> {
+    ) -> Result<Gd<ImageTexture>, Ra2Error> {
         let mut image = RgbaImage::new(width, depth);
         let mut index = 0;
         for dy in 0..self.height {
@@ -130,7 +130,7 @@ fn decompress_rle_data<R: Read>(
     Ok(decompressed_data)
 }
 
-fn rgba_to_image(rgba: RgbaImage) -> Result<Gd<Image>, Ra2Error> {
+fn rgba_to_image(rgba: RgbaImage) -> Result<Gd<ImageTexture>, Ra2Error> {
     let (width, height) = rgba.dimensions();
 
     // RGBA pixel data.
@@ -141,12 +141,16 @@ fn rgba_to_image(rgba: RgbaImage) -> Result<Gd<Image>, Ra2Error> {
     bytes.extend(data);
 
     // Create a Godot Image.
-    Ok(Image::create_from_data(
+    let image = Image::create_from_data(
         width as i32,
         height as i32,
-        false, // mipmaps
+        false,
         Format::RGBA8,
         &bytes,
     )
-    .ok_or(Ra2Error::ImageCreationFailed)?)
+    .ok_or(Ra2Error::ImageCreationFailed)?;
+
+    // Create an ImageTexture from the Image and return it.
+    let texture = ImageTexture::create_from_image(&image).ok_or(Ra2Error::ImageCreationFailed)?;
+    Ok(texture)
 }
