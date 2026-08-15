@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://boufcm624ehah"]
 
-[node name="Building" type="Building" unique_id=648239214]
+[node name="building" type="Building" unique_id=648239214]
 
-[node name="Visuals" type="Node2D" parent="." unique_id=18426987]
+[node name="visuals" type="Node2D" parent="." unique_id=18426987]
 
-[node name="Shp_Sprite" type="ShpSprite" parent="Visuals" unique_id=116307007]
+[node name="shp_sprite" type="ShpSprite" parent="visuals" unique_id=116307007]

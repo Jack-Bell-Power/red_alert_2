@@ -2,9 +2,7 @@ use std::io::{Read, Seek, SeekFrom};
 
 use byteorder::{LittleEndian, ReadBytesExt};
 use godot::classes::{
-    Image, ImageTexture,
-    class_macros::private::virtuals::{Xrvrs::Gd, ZipReader::PackedByteArray},
-    image::Format,
+    Image, ImageTexture, Texture2D, class_macros::private::virtuals::{Xrvrs::Gd, ZipReader::PackedByteArray}, image::Format,
 };
 use image::{Rgba, RgbaImage};
 
@@ -77,7 +75,7 @@ impl ShpFrame {
         palette: &Palette,
         width: u32,
         depth: u32,
-    ) -> Result<Gd<ImageTexture>, Ra2Error> {
+    ) -> Result<Gd<Texture2D>, Ra2Error> {
         let mut image = RgbaImage::new(width, depth);
         let mut index = 0;
         for dy in 0..self.height {
@@ -130,7 +128,7 @@ fn decompress_rle_data<R: Read>(
     Ok(decompressed_data)
 }
 
-fn rgba_to_image(rgba: RgbaImage) -> Result<Gd<ImageTexture>, Ra2Error> {
+fn rgba_to_image(rgba: RgbaImage) -> Result<Gd<Texture2D>, Ra2Error> {
     let (width, height) = rgba.dimensions();
 
     // RGBA pixel data.
@@ -152,5 +150,5 @@ fn rgba_to_image(rgba: RgbaImage) -> Result<Gd<ImageTexture>, Ra2Error> {
 
     // Create an ImageTexture from the Image and return it.
     let texture = ImageTexture::create_from_image(&image).ok_or(Ra2Error::ImageCreationFailed)?;
-    Ok(texture)
+    Ok(texture.upcast::<Texture2D>())
 }
