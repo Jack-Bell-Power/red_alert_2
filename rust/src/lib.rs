@@ -1,7 +1,5 @@
 use godot::prelude::*;
 
-mod decoder;
-mod errors;
 mod scripts;
 
 struct RedAlert;
