@@ -5,17 +5,25 @@
 [ext_resource type="Texture2D" uid="uid://bbw52cd8wcm4k" path="res://assets/images/ui/right_panel/radar/radar_000.png" id="3_fl47r"]
 [ext_resource type="Texture2D" uid="uid://38diwgxrv2fm" path="res://assets/images/ui/right_panel/diplobtn/diplobtn_000.png" id="3_p8l2r"]
 [ext_resource type="Texture2D" uid="uid://byw5q6edpixsg" path="res://assets/images/ui/right_panel/side1_000.png" id="4_2db7w"]
+[ext_resource type="Texture2D" uid="uid://bj4ewc4u7q7ag" path="res://assets/images/ui/right_panel/diplobtn/diplobtn_001.png" id="4_63fuo"]
 [ext_resource type="Texture2D" uid="uid://djpykbi0xqvow" path="res://assets/images/ui/right_panel/optbtn/optbtn_000.png" id="4_wvaga"]
 [ext_resource type="Texture2D" uid="uid://51kssjnh6w2t" path="res://assets/images/ui/right_panel/sell/sell_000.png" id="5_80ing"]
 [ext_resource type="Texture2D" uid="uid://bprdayc5xwlyx" path="res://assets/images/ui/right_panel/repair/repair_000.png" id="5_cuwu8"]
 [ext_resource type="Texture2D" uid="uid://ru8m2tq2wcp4" path="res://assets/images/ui/right_panel/side2_000.png" id="5_q3jjr"]
+[ext_resource type="Texture2D" uid="uid://bmb6klj6fwo7r" path="res://assets/images/ui/right_panel/optbtn/optbtn_001.png" id="6_12spo"]
 [ext_resource type="Texture2D" uid="uid://c62s7v3xn5sjx" path="res://assets/images/ui/right_panel/gwepicon_000.png" id="6_80ing"]
 [ext_resource type="Texture2D" uid="uid://d2d6bskxgqt42" path="res://assets/images/ui/right_panel/side3_000.png" id="6_gkivl"]
 [ext_resource type="Texture2D" uid="uid://tit5m6sh8456" path="res://assets/images/ui/right_panel/addon_000.png" id="7_80ing"]
 [ext_resource type="Texture2D" uid="uid://cay5krk5vt3ay" path="res://assets/images/ui/right_panel/tab00/tab00_000.png" id="9_wvaga"]
 [ext_resource type="Texture2D" uid="uid://c68flplnp8f1i" path="res://assets/images/ui/right_panel/tab01/tab01_000.png" id="10_2brka"]
+[ext_resource type="Texture2D" uid="uid://dvl02pi5gd2xm" path="res://assets/images/ui/right_panel/repair/repair_001.png" id="10_jbdcv"]
 [ext_resource type="Texture2D" uid="uid://b3t2aqojw6dxo" path="res://assets/images/ui/right_panel/tab02/tab02_000.png" id="11_oqrkl"]
+[ext_resource type="Texture2D" uid="uid://56i0d0heaxlw" path="res://assets/images/ui/right_panel/sell/sell_001.png" id="12_4li2d"]
 [ext_resource type="Texture2D" uid="uid://b3vvuwd4cyqvs" path="res://assets/images/ui/right_panel/tab03/tab03_000.png" id="12_wrpjo"]
+[ext_resource type="Texture2D" uid="uid://sixgddwcudro" path="res://assets/images/ui/right_panel/tab00/tab00_001.png" id="14_4trsg"]
+[ext_resource type="Texture2D" uid="uid://bye8dt4dl7gj8" path="res://assets/images/ui/right_panel/tab01/tab01_001.png" id="16_bpa30"]
+[ext_resource type="Texture2D" uid="uid://elmo1pla5lqb" path="res://assets/images/ui/right_panel/tab02/tab02_001.png" id="18_tvslq"]
+[ext_resource type="Texture2D" uid="uid://dpwd12n32neaq" path="res://assets/images/ui/right_panel/tab03/tab03_001.png" id="20_e4o46"]
 
 [node name="right_panel" type="Control" unique_id=2074587228]
 layout_mode = 3
@@ -43,21 +51,23 @@ texture = ExtResource("1_32yc8")
 layout_mode = 2
 texture = ExtResource("2_fl47r")
 
-[node name="diplobtn" type="TextureRect" parent="v_box_container/top" unique_id=430239791]
+[node name="diplobtn" type="TextureButton" parent="v_box_container/top" unique_id=1520654102]
 layout_mode = 0
 offset_left = 13.0
 offset_top = 5.0
 offset_right = 85.0
 offset_bottom = 27.0
-texture = ExtResource("3_p8l2r")
+texture_normal = ExtResource("3_p8l2r")
+texture_hover = ExtResource("4_63fuo")
 
-[node name="optbtn" type="TextureRect" parent="v_box_container/top" unique_id=1383158527]
+[node name="optbtn" type="TextureButton" parent="v_box_container/top" unique_id=1056545734]
 layout_mode = 0
 offset_left = 85.0
 offset_top = 5.0
 offset_right = 157.0
 offset_bottom = 27.0
-texture = ExtResource("4_wvaga")
+texture_normal = ExtResource("4_wvaga")
+texture_hover = ExtResource("6_12spo")
 
 [node name="radar" type="TextureRect" parent="v_box_container" unique_id=571497321]
 layout_mode = 2
@@ -67,65 +77,71 @@ texture = ExtResource("3_fl47r")
 layout_mode = 2
 texture = ExtResource("4_2db7w")
 
-[node name="repair" type="TextureRect" parent="v_box_container/side1" unique_id=1423403060]
+[node name="repair" type="TextureButton" parent="v_box_container/side1" unique_id=1041145315]
 layout_mode = 0
 offset_left = 33.0
 offset_top = 7.0
 offset_right = 85.0
 offset_bottom = 39.0
-texture = ExtResource("5_cuwu8")
+texture_normal = ExtResource("5_cuwu8")
+texture_hover = ExtResource("10_jbdcv")
 
-[node name="sell" type="TextureRect" parent="v_box_container/side1" unique_id=905199458]
+[node name="sell" type="TextureButton" parent="v_box_container/side1" unique_id=1582714469]
 layout_mode = 0
 offset_left = 85.0
 offset_top = 7.0
 offset_right = 137.0
 offset_bottom = 39.0
-texture = ExtResource("5_80ing")
+texture_normal = ExtResource("5_80ing")
+texture_hover = ExtResource("12_4li2d")
 
-[node name="tab00" type="TextureRect" parent="v_box_container/side1" unique_id=1506248667]
+[node name="tab00" type="TextureButton" parent="v_box_container/side1" unique_id=1519973362]
 layout_mode = 0
 offset_left = 20.0
 offset_top = 39.0
 offset_right = 52.0
 offset_bottom = 67.0
-texture = ExtResource("9_wvaga")
+texture_normal = ExtResource("9_wvaga")
+texture_hover = ExtResource("14_4trsg")
 
-[node name="tab01" type="TextureRect" parent="v_box_container/side1" unique_id=1992606491]
+[node name="tab01" type="TextureButton" parent="v_box_container/side1" unique_id=651463337]
 layout_mode = 0
 offset_left = 52.0
 offset_top = 39.0
 offset_right = 84.0
 offset_bottom = 67.0
-texture = ExtResource("10_2brka")
+texture_normal = ExtResource("10_2brka")
+texture_hover = ExtResource("16_bpa30")
 
-[node name="tab02" type="TextureRect" parent="v_box_container/side1" unique_id=286131049]
+[node name="tab02" type="TextureButton" parent="v_box_container/side1" unique_id=2020207792]
 layout_mode = 0
 offset_left = 84.0
 offset_top = 39.0
 offset_right = 116.0
 offset_bottom = 67.0
-texture = ExtResource("11_oqrkl")
+texture_normal = ExtResource("11_oqrkl")
+texture_hover = ExtResource("18_tvslq")
 
-[node name="tab03" type="TextureRect" parent="v_box_container/side1" unique_id=1308288286]
+[node name="tab03" type="TextureButton" parent="v_box_container/side1" unique_id=370934520]
 layout_mode = 0
 offset_left = 116.0
 offset_top = 39.0
 offset_right = 148.0
 offset_bottom = 67.0
-texture = ExtResource("12_wrpjo")
+texture_normal = ExtResource("12_wrpjo")
+texture_hover = ExtResource("20_e4o46")
 
 [node name="side2_1" type="TextureRect" parent="v_box_container" unique_id=1003780438]
 layout_mode = 2
 texture = ExtResource("5_q3jjr")
 
-[node name="gwepicon" type="TextureRect" parent="v_box_container/side2_1" unique_id=1843267554]
+[node name="gwepicon" type="TextureButton" parent="v_box_container/side2_1" unique_id=1154111412]
 layout_mode = 0
-offset_left = 21.5
+offset_left = 21.0
 offset_top = 1.0
-offset_right = 81.5
+offset_right = 81.0
 offset_bottom = 49.0
-texture = ExtResource("6_80ing")
+texture_normal = ExtResource("6_80ing")
 
 [node name="side2_2" type="TextureRect" parent="v_box_container" unique_id=1687253105]
 layout_mode = 2

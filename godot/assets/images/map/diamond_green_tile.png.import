@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cb7urg82iils3"
-path="res://.godot/imported/diamond_grid.png-67ae28a055c31fc855998bb729e0761f.ctex"
+uid="uid://cbva5spcgcvlp"
+path="res://.godot/imported/diamond_green_tile.png-1bb8678550ede945f438ee5fa946bebf.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/diamond_grid.png"
-dest_files=["res://.godot/imported/diamond_grid.png-67ae28a055c31fc855998bb729e0761f.ctex"]
+source_file="res://assets/images/map/diamond_green_tile.png"
+dest_files=["res://.godot/imported/diamond_green_tile.png-1bb8678550ede945f438ee5fa946bebf.ctex"]
 
 [params]
 
